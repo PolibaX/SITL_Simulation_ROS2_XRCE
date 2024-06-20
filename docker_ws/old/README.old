@@ -1,0 +1,23 @@
+cd docker_ws
+./build blablabla
+
+
+#####
+
+
+cd ..
+./run_SITL_ros2
+
+
+### inside
+
+./scripts/start_dds.sh
+
+
+### outside 
+./exec_SITL_ros2
+# inside
+cd PX4autopilotblabla
+../scripts/start_sim
+
+

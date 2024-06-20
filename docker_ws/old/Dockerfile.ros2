@@ -1,0 +1,47 @@
+FROM ros:humble
+
+# use bash
+SHELL ["/bin/bash", "-c"]
+
+# install utilities 
+RUN apt update && apt upgrade -y && \
+    apt install -y vim nano git wget curl \
+    iputils-ping net-tools openssh-server pip
+
+
+# copy PX4 repository
+COPY PX4-Autopilot /root/PX4-Autopilot
+
+# Install PX4
+WORKDIR /root
+RUN bash ./PX4-Autopilot/Tools/setup/ubuntu.sh
+WORKDIR /root/PX4-Autopilot/
+RUN make px4_sitl
+
+# python dependencies
+RUN pip install --user -U empy==3.3.4 pyros-genmsg setuptools
+
+# setup micro XRCE-DDS Agent & Client
+WORKDIR /root
+RUN git clone https://github.com/eProsima/Micro-XRCE-DDS-Agent.git
+WORKDIR /root/Micro-XRCE-DDS-Agent
+RUN mkdir build
+WORKDIR /root/Micro-XRCE-DDS-Agent/build
+RUN cmake ..
+RUN make
+RUN make install
+RUN ldconfig /usr/local/lib
+
+
+
+# build ROS2 workspace
+
+WORKDIR /root
+RUN mkdir -p ~/ws_sensor_combined/src/
+WORKDIR /root/ws_sensor_combined/src/
+RUN git clone https://github.com/PX4/px4_msgs.git
+RUN git clone https://github.com/PX4/px4_ros_com.git
+WORKDIR /root/ws_sensor_combined/
+RUN source /opt/ros/humble/setup.bash && colcon build --symlink-install
+
+RUN apt install libnvidia-gl-535 -y
