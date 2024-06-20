@@ -36,14 +36,3 @@ Source the ros2 workspace:<br>
 Go OffBoard:<br>
 `ros2 run px4_ros_com offboard_control`<br>
 
-
-
-
-
-# WORKDIR /root
-# RUN bash ./PX4-Autopilot/Tools/setup/ubuntu.sh
-# WORKDIR /root/PX4-Autopilot/
-# RUN make px4_sitl
-
-
-
