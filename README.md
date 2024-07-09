@@ -25,6 +25,7 @@ Clone the repository:<br>
 `git clone https://github.com/PX4/PX4-Autopilot.git --recursive`<br>
 Go in the repo and build SITL:<br>
 `cd PX4-Autopilot`<br>
+`git config --global --add safe.directory /root/px4_autopilot_ws/PX4-Autopilot`<br>
 `make px4_sitl`<br>
 
 ## Run simulation
@@ -33,9 +34,13 @@ Inside the repo in px4_autopilot_ws in the container run:<br>
 In another terminal inside the container opened using **exec_SITL_ros2.sh** run XRCE:<br>
 `/root/scripts/start_dds.sh`
 ## Offboard mode
+### Build packages
+Inside the container in the /root/ros2_offboard folder there is a ros2 workspace, build it:
+`source /opt/ros/humble/setup.bash`<br>
+`colcon build --symlink-install`<br>
 
 ### Go Offboard
-Open Qground Control (necessary to use the drone as it wants a connection to the ground control station)<br>
+Open Qground Control in your host machine (necessary to use the drone as it wants a connection to the ground control station)<br>
 Source the ros2 workspace:<br>
 `cd /root/ros2_offboard`<br>
 `source install/setup.bash`<br>
