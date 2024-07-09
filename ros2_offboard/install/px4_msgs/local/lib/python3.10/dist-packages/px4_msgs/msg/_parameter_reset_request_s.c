@@ -1,1 +1,0 @@
-/root/ros2_offboard/build/px4_msgs/rosidl_generator_py/px4_msgs/msg/_parameter_reset_request_s.c

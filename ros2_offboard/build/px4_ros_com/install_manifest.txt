@@ -1,3 +1,0 @@
-/root/ros2_offboard/install/px4_ros_com/lib/libframe_transforms.so
-/root/ros2_offboard/install/px4_ros_com/share/px4_ros_com/cmake/export_frame_transformsExport.cmake
-/root/ros2_offboard/install/px4_ros_com/share/px4_ros_com/cmake/export_frame_transformsExport-noconfig.cmake
