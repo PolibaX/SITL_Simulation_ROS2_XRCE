@@ -4,7 +4,7 @@ docker run --rm -it --privileged --ipc host \
     --net host\
 	--runtime nvidia --gpus all \
     -v ./scripts:/root/scripts \
-    -v ./ros2_offboard:/root/ros2_offboard \
+    -v ./ros2_offboard_ws:/root/ros2_offboard \
     -v ./px4_autopilot_ws:/root/px4_autopilot_ws \
 	-v /dev:/dev \
 	-v /tmp/.X11-unix/:/tmp/.X11-unix \
