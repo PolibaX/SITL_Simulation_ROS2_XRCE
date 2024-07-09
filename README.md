@@ -24,11 +24,13 @@ Go in the repo and build SITL:<br>
 `make px4_sitl`<br>
 
 ## Run simulation
-Inside the repo run:<br>
+Inside the repo in px4_autopilot_ws in the container run:<br>
 `../../scripts/start_sim.sh`
 In another terminal inside the container opened using **exec_SITL_ros2.sh** run XRCE:<br>
 `/root/scripts/start_dds.sh`
-## Go Offboard
+## Offboard mode
+
+### Go Offboard
 Open Qground Control (necessary to use the drone as it wants a connection to the ground control station)<br>
 Source the ros2 workspace:<br>
 `cd /root/ros2_offboard`<br>
