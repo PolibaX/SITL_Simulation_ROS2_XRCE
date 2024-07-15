@@ -4,3 +4,6 @@
 [submodule "ros2_offboard_ws/src/px4_msgs"]
 	path = ros2_offboard_ws/src/px4_msgs
 	url = https://github.com/PX4/px4_msgs.git
+[submodule "px4_autopilot_ws/PX4-Autopilot"]
+	path = px4_autopilot_ws/PX4-Autopilot
+	url = https://github.com/PolibaX/PX4-Autopilot.git
