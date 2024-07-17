@@ -46,16 +46,17 @@ RUN source /opt/ros/humble/setup.bash && colcon build --symlink-install
 
 RUN apt install libnvidia-gl-535 -y
 
-# Clone px4 to have ubuntu.sh
 
+# debian non interactive
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Clone px4
 WORKDIR /root
 RUN git clone https://github.com/PX4/PX4-Autopilot.git --recursive
 WORKDIR /root/PX4-Autopilot
 RUN bash ./Tools/setup/ubuntu.sh
+RUN make px4_sitl
 
-# remove px4 autopilot folder
-WORKDIR /root
-RUN rm -rf PX4-Autopilot
 
 # install ros-humble-ros-gz
 
@@ -67,3 +68,5 @@ RUN apt update && apt install -y ros-humble-ros-gzgarden*
 # set ros_domain_id to 33 to avoid conflicts with other ros2 networks
 
 ENV ROS_DOMAIN_ID=33
+
+
