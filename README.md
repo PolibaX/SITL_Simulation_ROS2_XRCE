@@ -2,9 +2,6 @@
 This repository contains all the necessary parts to build and run a docker image with SITL simulation on ROS2 leveraging XRCE to communicate with PX4. <br>
 The repository contains also a ROS2 node for the offboard control
 
-## THIS REPOSITORY CONTAINS SUB MODULES, remember this when cloning
-
-clone using `git clone git@github.com:PolibaX/SITL_Simulation_ROS2_XRCE.git --recursive`
 
 ## build image
 
@@ -16,17 +13,8 @@ In the first launch px4 needs to be built.
 
 ### Run container
 on the root of the repository folder run:<br>
-`./run_SITL_ros2.sh`
+`./run_SITL_ros2.sh` this run scripts may need additional volumes to be mapped.
 
-### Inside the container
-Go in px4_autopilot_ws:<br>
-`cd px_autopilot_ws`<br>
-Clone the repository:<br>
-`git clone https://github.com/PX4/PX4-Autopilot.git --recursive`<br>
-Go in the repo and build SITL:<br>
-`cd PX4-Autopilot`<br>
-`git config --global --add safe.directory /root/px4_autopilot_ws/PX4-Autopilot`<br>
-`make px4_sitl`<br>
 
 ## Run simulation
 Inside the repo in px4_autopilot_ws in the container run:<br>
