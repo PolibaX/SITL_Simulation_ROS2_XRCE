@@ -1,19 +1,16 @@
 # PX4 SITL ROS 2
 This repository contains all the necessary parts to build and run a docker image with SITL simulation on ROS2 leveraging XRCE to communicate with PX4. <br>
-The repository contains also a ROS2 node for the offboard control
-
+The repository contains also a ROS2 node for the offboard control, clone this repositoiry using --recursive option
 
 ## build image
 
-`cd docker_ws`
+`cd docker_ws` <br>
 `./build_SITL_ros2.sh`
 
-## build PX4 (necessary on the first time)
-In the first launch px4 needs to be built.
 
-### Run container
+## Run container
 on the root of the repository folder run:<br>
-`./run_SITL_ros2.sh` this run scripts may need additional volumes to be mapped.
+`./run_SITL_ros2.sh` this run scripts may need additional volumes to be mapped in the long run.
 
 
 ## Run simulation
@@ -35,3 +32,6 @@ Source the ros2 workspace:<br>
 Go OffBoard:<br>
 `ros2 run px4_ros_com offboard_control`<br>
 
+## Multi agent
+
+will document this part as soon as a stable release is reached
