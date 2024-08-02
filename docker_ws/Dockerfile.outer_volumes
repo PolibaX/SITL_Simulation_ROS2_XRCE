@@ -18,8 +18,18 @@ RUN apt update && apt upgrade -y && \
 # WORKDIR /root/PX4-Autopilot/
 # RUN make px4_sitl
 
+# debian non interactive
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Clone px4
+WORKDIR /root
+RUN git clone https://github.com/PX4/PX4-Autopilot.git --recursive
+WORKDIR /root/PX4-Autopilot
+RUN bash ./Tools/setup/ubuntu.sh
+RUN make px4_sitl
+
 # python dependencies
-RUN pip install --user -U empy==3.3.4 pyros-genmsg setuptools
+RUN pip install --user -U empy==3.3.4 pyros-genmsg setuptools==70.0.0
 
 # setup micro XRCE-DDS Agent & Client
 WORKDIR /root
@@ -47,15 +57,7 @@ RUN source /opt/ros/humble/setup.bash && colcon build --symlink-install
 RUN apt install libnvidia-gl-535 -y
 
 
-# debian non interactive
-ENV DEBIAN_FRONTEND=noninteractive
 
-# Clone px4
-WORKDIR /root
-RUN git clone https://github.com/PX4/PX4-Autopilot.git --recursive
-WORKDIR /root/PX4-Autopilot
-RUN bash ./Tools/setup/ubuntu.sh
-RUN make px4_sitl
 
 
 # install ros-humble-ros-gz
