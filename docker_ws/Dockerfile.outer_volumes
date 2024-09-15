@@ -68,7 +68,8 @@ RUN apt-get update
 RUN apt update && apt install -y ros-humble-ros-gzgarden*
 
 # set ros_domain_id to 33 to avoid conflicts with other ros2 networks
-
 ENV ROS_DOMAIN_ID=33
 
+RUN apt install python3-pip -y
+RUN pip3 install --upgrade scipy
 
