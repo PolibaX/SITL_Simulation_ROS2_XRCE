@@ -12,6 +12,6 @@ docker run --rm -it --privileged --ipc host \
     -e XAUTHORITY=/root/.Xauthority \
     -e DISPLAY=$DISPLAY \
     -w /root \
-    --name ros2_sitl \
-    sitl_ros2:outer_volumes bash 
+    --name ros2_sitlv1.14 \
+    sitl_ros2:v1.14 bash 
 
