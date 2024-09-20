@@ -7,6 +7,8 @@ docker run --rm -it --privileged --ipc host \
     -v ./bridge_ws:/root/bridge_ws \
     -v ./ros2_offboard_ws:/root/ros2_offboard \
     -v ./PX4-sim-patches/x500_model.sdf:/root/PX4-Autopilot/Tools/simulation/gz/models/x500/model.sdf \
+    -v ./PX4-sim-patches/x500_depth_model.sdf:/root/PX4-Autopilot/Tools/simulation/gz/models/x500_depth/model.sdf \
+    -v ./PX4-sim-patches/default_world.sdf:/root/PX4-Autopilot/Tools/simulation/gz/worlds/default.sdf \
 	-v /dev:/dev \
 	-v /tmp/.X11-unix/:/tmp/.X11-unix \
 	-v ~/.Xauthority:/root/.Xauthority \
