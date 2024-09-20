@@ -1,6 +1,0 @@
-[submodule "ros2_offboard_ws/src/px4_ros_com"]
-	path = ros2_offboard_ws/src/px4_ros_com
-	url = https://github.com/PX4/px4_ros_com.git
-[submodule "ros2_offboard_ws/src/px4_msgs"]
-	path = ros2_offboard_ws/src/px4_msgs
-	url = https://github.com/PX4/px4_msgs.git
