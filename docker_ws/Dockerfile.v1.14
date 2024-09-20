@@ -76,6 +76,6 @@ RUN pip3 install --upgrade scipy
 # RUN git clone --recursive https://github.com/Auterion/px4-ros2-interface-lib
 # WORKDIR /root/ws_sensor_combined/
 # RUN source /opt/ros/humble/setup.bash && colcon build --symlink-install
-
+RUN apt install ros-humble-depth-image-proc -y
 # # set ros_domain_id to 33 to avoid conflicts with other ros2 networks
 ENV ROS_DOMAIN_ID=33
