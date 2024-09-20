@@ -1,3 +1,5 @@
+# WARNING DOCS UNDER DEVELOPMENT AND INCONSISTENT
+
 # PX4 SITL ROS 2
 This repository contains all the necessary parts to build and run a docker image with SITL simulation on ROS2 leveraging XRCE to communicate with PX4. <br>
 The repository contains also a ROS2 node for the offboard control, clone this repositoiry using --recursive option
