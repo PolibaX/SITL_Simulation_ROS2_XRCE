@@ -561,5 +561,14 @@
 			<joint_name>motor_2</joint_name>
 			<joint_name>motor_3</joint_name>
 		</plugin>
+
+
+      <plugin
+        filename="ignition-gazebo-pose-publisher-system"
+        name="ignition::gazebo::systems::PosePublisher">
+        <publish_link_pose>true</publish_link_pose>
+
+        <use_pose_vector_msg>true</use_pose_vector_msg>
+      </plugin>
 	</model>
 </sdf>
