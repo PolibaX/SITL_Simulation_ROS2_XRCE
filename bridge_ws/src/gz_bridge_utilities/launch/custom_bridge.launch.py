@@ -19,7 +19,7 @@ def generate_launch_description():
             namespace='',
             executable='parameter_bridge',
             name='bridge_poses',
-            arguments=["/world/default/pose/info@geometry_msgs/msg/PoseArray[gz.msgs.Pose_V","--ros-args",
+            arguments=["/model/x500_depth_0/pose@geometry_msgs/msg/PoseArray[gz.msgs.Pose_V","--ros-args",
                           "-r", "/model/x500_depth_0/pose:=/gazebo/model/state",]
         ),
 
