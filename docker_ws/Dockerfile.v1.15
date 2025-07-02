@@ -1,5 +1,7 @@
 FROM ros:humble
 
+ARG PX4_VERSION=1.15
+
 # use bash
 SHELL ["/bin/bash", "-c"]
 
@@ -16,14 +18,14 @@ RUN apt update && apt upgrade -y && \
 # WORKDIR /root
 # RUN bash ./PX4-Autopilot/Tools/setup/ubuntu.sh
 # WORKDIR /root/PX4-Autopilot/
-# RUN make px4_sitl
+# RUN make px4_sitl1.14
 
 # debian non interactive
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Clone px4
 WORKDIR /root
-RUN git clone --branch release/1.14 https://github.com/PX4/PX4-Autopilot.git --recursive
+RUN git clone --recursive --branch release/${PX4_VERSION} https://github.com/PX4/PX4-Autopilot.git
 WORKDIR /root/PX4-Autopilot
 RUN bash ./Tools/setup/ubuntu.sh
 RUN make px4_sitl
@@ -49,33 +51,20 @@ RUN ldconfig /usr/local/lib
 WORKDIR /root
 RUN mkdir -p ~/ws_sensor_combined/src/
 WORKDIR /root/ws_sensor_combined/src/
-RUN git clone --branch release/1.14 https://github.com/PX4/px4_msgs.git
-RUN git clone --branch release/v1.14 https://github.com/PX4/px4_ros_com.git
+RUN git clone --branch release/${PX4_VERSION} https://github.com/PX4/px4_msgs.git
+RUN git clone --branch release/${PX4_VERSION} https://github.com/PX4/px4_ros_com.git
 WORKDIR /root/ws_sensor_combined/
 RUN source /opt/ros/humble/setup.bash && colcon build --symlink-install
 
-RUN apt install libnvidia-gl-535 -y
-
-
-
-
-
 # install ros-humble-ros-gz
 
-RUN sh -c 'echo "deb [arch=$(dpkg --print-architecture)] http://packages.ros.org/ros2/ubuntu $(lsb_release -cs) main" > /etc/apt/sources.list.d/ros2-latest.list'
-RUN curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add -
-RUN apt-get update
-RUN apt update && apt install -y ros-humble-ros-gzgarden*
+RUN wget https://packages.osrfoundation.org/gazebo.gpg -O /usr/share/keyrings/pkgs-osrf-archive-keyring.gpg
+RUN echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/pkgs-osrf-archive-keyring.gpg] http://packages.osrfoundation.org/gazebo/ubuntu-stable $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/gazebo-stable.list > /dev/null
+RUN apt-get update && apt install gz-garden
 
 RUN apt install python3-pip -y
 RUN pip3 install --upgrade scipy
 
-# put navigation libs px4
-
-# WORKDIR /root/ws_sensor_combined/src/
-# RUN git clone --recursive https://github.com/Auterion/px4-ros2-interface-lib
-# WORKDIR /root/ws_sensor_combined/
-# RUN source /opt/ros/humble/setup.bash && colcon build --symlink-install
 RUN apt update && apt install ros-humble-depth-image-proc -y
-# # set ros_domain_id to 33 to avoid conflicts with other ros2 networks
+# set ros_domain_id to 33 to avoid conflicts with other ros2 networks
 ENV ROS_DOMAIN_ID=33
