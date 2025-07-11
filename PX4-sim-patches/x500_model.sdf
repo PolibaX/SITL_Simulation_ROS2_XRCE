@@ -33,7 +33,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>model://x500/meshes/NXP-HGD-CF.dae</uri>
+            <uri>model://x500_base/meshes/NXP-HGD-CF.dae</uri>
           </mesh>
         </geometry>
       </visual>
@@ -42,16 +42,16 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>model://x500/meshes/5010Base.dae</uri>
+            <uri>model://x500_base/meshes/5010Base.dae</uri>
           </mesh>
         </geometry>
       </visual>
-      <visual name="5010_motor_base_1">
+      <visual name="50./start_sim_depth.sh & ./start_dds.sh & ./start_ros2gz_bridge.sh10_motor_base_1">
         <pose>-0.174 0.174 .032 0 0 -.45</pose>
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>model://x500/meshes/5010Base.dae</uri>
+            <uri>model://x500_base/meshes/5010Base.dae</uri>
           </mesh>
         </geometry>
       </visual>
@@ -60,7 +60,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>model://x500/meshes/5010Base.dae</uri>
+            <uri>model://x500_base/meshes/5010Base.dae</uri>
           </mesh>
         </geometry>
       </visual>
@@ -69,7 +69,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>model://x500/meshes/5010Base.dae</uri>
+            <uri>model://x500_base/meshes/5010Base.dae</uri>
           </mesh>
         </geometry>
       </visual>
@@ -87,7 +87,7 @@
           <specular>1.0 1.0 1.0</specular>
           <pbr>
             <metal>
-              <albedo_map>model://x500/materials/textures/nxp.png</albedo_map>
+              <albedo_map>model://x500_base/materials/textures/nxp.png</albedo_map>
             </metal>
           </pbr>
         </material>
@@ -106,7 +106,7 @@
           <specular>1.0 1.0 1.0</specular>
           <pbr>
             <metal>
-              <albedo_map>model://x500/materials/textures/nxp.png</albedo_map>
+              <albedo_map>model://x500_base/materials/textures/nxp.png</albedo_map>
             </metal>
           </pbr>
         </material>
@@ -125,7 +125,7 @@
           <specular>1.0 1.0 1.0</specular>
           <pbr>
             <metal>
-              <albedo_map>model://x500/materials/textures/rd.png</albedo_map>
+              <albedo_map>model://x500_base/materials/textures/rd.png</albedo_map>
             </metal>
           </pbr>
         </material>
@@ -260,7 +260,7 @@
         <geometry>
           <mesh>
             <scale>0.8461538461538461 0.8461538461538461 0.8461538461538461</scale>
-            <uri>model://x500/meshes/1345_prop_ccw.stl</uri>
+            <uri>model://x500_base/meshes/1345_prop_ccw.stl</uri>
           </mesh>
         </geometry>
         <material>
@@ -275,7 +275,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>model://x500/meshes/5010Bell.dae</uri>
+            <uri>model://x500_base/meshes/5010Bell.dae</uri>
           </mesh>
         </geometry>
       </visual>
@@ -332,7 +332,7 @@
         <geometry>
           <mesh>
             <scale>0.8461538461538461 0.8461538461538461 0.8461538461538461</scale>
-            <uri>model://x500/meshes/1345_prop_ccw.stl</uri>
+            <uri>model://x500_base/meshes/1345_prop_ccw.stl</uri>
           </mesh>
         </geometry>
         <material>
@@ -347,7 +347,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>model://x500/meshes/5010Bell.dae</uri>
+            <uri>model://x500_base/meshes/5010Bell.dae</uri>
           </mesh>
         </geometry>
       </visual>
@@ -404,7 +404,7 @@
         <geometry>
           <mesh>
             <scale>0.8461538461538461 0.8461538461538461 0.8461538461538461</scale>
-            <uri>model://x500/meshes/1345_prop_cw.stl</uri>
+            <uri>model://x500_base/meshes/1345_prop_cw.stl</uri>
           </mesh>
         </geometry>
         <material>
@@ -419,7 +419,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>model://x500/meshes/5010Bell.dae</uri>
+            <uri>model://x500_base/meshes/5010Bell.dae</uri>
           </mesh>
         </geometry>
       </visual>
@@ -476,7 +476,7 @@
         <geometry>
           <mesh>
             <scale>0.8461538461538461 0.8461538461538461 0.8461538461538461</scale>
-            <uri>model://x500/meshes/1345_prop_cw.stl</uri>
+            <uri>model://x500_base/meshes/1345_prop_cw.stl</uri>
           </mesh>
         </geometry>
         <material>
@@ -491,7 +491,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>model://x500/meshes/5010Bell.dae</uri>
+            <uri>model://x500_base/meshes/5010Bell.dae</uri>
           </mesh>
         </geometry>
       </visual>

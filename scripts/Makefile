@@ -7,7 +7,7 @@ all: simulation dds gazebo_bridge
 
 simulation:
 	@echo "Launching simulation..."
-	bash ./start_sim_depth.sh > /dev/null &
+	bash ./start_sim_depth.sh &
 
 dds:
 	@echo "Starting DDS agent..."
@@ -15,13 +15,4 @@ dds:
 
 gazebo_bridge:
 	@echo "Starting ROS2Gazebo bridge..."
-	bash ./start_ros2gz_bridge.sh &
-
-stop:
-	@echo "Stopping all background processes..."
-	-pkill -9 -f px4
-	-pkill -9 -f ruby
-	-pkill -9 -f MicroXRCEAgent
-	-pkill -9 -f image_bridge
-	-pkill -9 -f param_bridg
-	-pkill -9 -f static_transfor
+	bash -ci "./start_ros2gz_bridge.sh"
