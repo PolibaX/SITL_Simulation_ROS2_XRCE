@@ -53,19 +53,19 @@ def generate_launch_description():
                           "-r", "/model/x500_depth_0/pose:=/tf",]
         ),
 
-        Node(
-            package='tf2_ros',
-            namespace = 'scan_to_map',
-            executable='static_transform_publisher',
-            arguments= ["0", "0", "0", "0", "0", "0", "camera_point_cloud", "x500_depth_0/OakD-Lite/base_link/StereoOV7251"]
-        ),
+        # Node(
+        #     package='tf2_ros',
+        #     namespace = 'scan_to_map',
+        #     executable='static_transform_publisher',
+        #     arguments= ["0", "0", "0", "0", "0", "0", "camera_point_cloud", "x500_depth_0/OakD-Lite/base_link/StereoOV7251"]
+        # ),
 
-        Node(
-            package='tf2_ros',
-            namespace = 'attach_point_cloud',
-            executable='static_transform_publisher',
-            arguments= ["0", "0", "0", "0", "0", "0", "x500_depth_0/OakD-Lite/base_link", "camera_point_cloud"]
-        ),
+        # Node(
+        #     package='tf2_ros',
+        #     namespace = 'attach_point_cloud',
+        #     executable='static_transform_publisher',
+        #     arguments= ["0.15", "0", "-0.15", "0", "0.349", "0", "x500_depth_0/OakD-Lite/base_link", "camera_point_cloud"]
+        # ),
 
         # Node(
         #     package='depth_image_proc',
