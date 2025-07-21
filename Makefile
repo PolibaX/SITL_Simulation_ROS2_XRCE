@@ -33,8 +33,8 @@ run:
 
 run-dev:
 	@echo "Launching PX4 SITL simulation in Docker container..."
-	xhost +
-	docker run --rm -it --privileged --ipc host \
+	@xhost +
+	@docker run --rm -it --privileged --ipc host \
 		--net host \
 		--runtime nvidia --gpus all \
 		-v $(ROOT_DIR)/scripts:/root/scripts \

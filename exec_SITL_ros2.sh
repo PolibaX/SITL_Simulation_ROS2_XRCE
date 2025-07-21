@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker exec -it ros2_sitlv1.15 bash 
+docker exec -it sitl-px4 bash 
