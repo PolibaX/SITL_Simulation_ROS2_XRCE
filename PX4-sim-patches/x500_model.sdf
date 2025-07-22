@@ -46,7 +46,7 @@
           </mesh>
         </geometry>
       </visual>
-      <visual name="50./start_sim_depth.sh & ./start_dds.sh & ./start_ros2gz_bridge.sh10_motor_base_1">
+      <visual name="5010_motor_base_1">
         <pose>-0.174 0.174 .032 0 0 -.45</pose>
         <geometry>
           <mesh>

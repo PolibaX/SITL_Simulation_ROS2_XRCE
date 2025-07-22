@@ -60,4 +60,4 @@ RUN pip3 install --upgrade scipy
 RUN apt update && apt install -y ros-humble-depth-image-proc ros-humble-ros-gzgarden-image
 RUN apt install libnvidia-gl-550 -y
 # set ros_domain_id to 33 to avoid conflicts with other ros2 networks
-# ENV ROS_DOMAIN_ID=33
+ENV ROS_DOMAIN_ID=33
