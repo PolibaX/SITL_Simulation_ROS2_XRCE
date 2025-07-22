@@ -1,6 +1,5 @@
 FROM ros:jazzy
 
-
 # build ROS2 workspace
 ARG PX4_MSG_VERSION=1.15
 
