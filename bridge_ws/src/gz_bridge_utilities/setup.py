@@ -23,6 +23,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+            'bridge_node = gz_bridge_utilities.bridge_node:main'
         ],
     },
 )

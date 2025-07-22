@@ -53,7 +53,7 @@ def generate_launch_description():
             executable='parameter_bridge',
             name='bridge_tfs',
             arguments=["/model/x500_depth_0/pose@tf2_msgs/msg/TFMessage[gz.msgs.Pose_V","--ros-args",
-                          "-r", "/model/x500_depth_0/pose:=/tf",]
+                          "-r", "/model/x500_depth_0/pose:=/tf"]
         ),
 
         Node(
@@ -63,6 +63,18 @@ def generate_launch_description():
             arguments= ["0.01233", "-0.03", "0.01878", "0", "0", "0", "x500_depth_0/camera_link", "x500_depth_0/camera_link/StereoOV7251"]
         ),
 
+        Node(
+            package='gz_bridge_utilities',
+            namespace='',
+            executable='bridge_node',
+            name='tf_bridge_node',
+            # parameters=[{'tf_pub_rate': 100.0}],
+            # remappings=[
+            #     ('/tf', '/matte/tf'),
+            #     ('/gazebo/model/state', '/model/x500_depth_0/pose')
+            # ]
+        ),
+        
         # Node(
         #     package='tf2_ros',
         #     namespace = 'scan_to_map',
