@@ -1,0 +1,25 @@
+FROM ubuntu:22.04
+
+RUN apt update -y && apt install sudo -y
+
+ARG PX4_VERSION=v1.15.4
+
+# debian non interactive
+ENV DEBIAN_FRONTEND=noninteractive
+
+# use bash
+SHELL ["/bin/bash", "-c"]
+
+# install utilities 
+RUN apt update && apt upgrade -y && \
+    apt install -y vim nano git wget curl \
+    iputils-ping net-tools openssh-server python3-pip
+
+
+# Clone px4
+WORKDIR /root
+RUN git clone --recursive --branch ${PX4_VERSION} https://github.com/PX4/PX4-Autopilot.git
+WORKDIR /root/PX4-Autopilot
+RUN bash ./Tools/setup/ubuntu.sh
+RUN make px4_sitl
+

@@ -1,5 +1,10 @@
-CONTAINER_IMAGE := sitl_ros2:v1.15
-CONTAINER_NAME := sitl-px4
+CONTAINER_IMAGE_SITL := polibax/sitl_px4:v1.15
+CONTAINER_NAME_SITL := sitl_px4
+CONTAINER_IMAGE_BRIDGE := polibax/sitl_bridge:jazzy
+CONTAINER_NAME_BRIDGE := sitl_bridge
+CONTAINER_IMAGE_XRCE := polibax/sitl_xrce:jazzy
+CONTAINER_NAME_XRCE := sitl_xrce
+
 PERCENT := %
 ROOT_DIR := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 WORK_DIR := /root/
@@ -8,17 +13,17 @@ WORK_DIR := /root/
 
 default: run
 
-run:
-	@echo "Launching PX4 SITL simulation in Docker container..."
+
+run-dev-bridge:
+	@echo "Launching PX4 SITL Bridge simulation in Docker container..."
 	@xhost +
 	@docker run --rm -it --privileged --ipc host \
 		--net host \
 		--runtime nvidia --gpus all \
 		-v $(ROOT_DIR)/scripts:/root/scripts \
 		-v $(ROOT_DIR)/bridge_ws:/root/bridge_ws \
-		-v $(ROOT_DIR)/ros2_offboard_ws:/root/ros2_offboard \
 		-v $(ROOT_DIR)/PX4-sim-patches/r1_rover:/root/PX4-Autopilot/Tools/simulation/gz/models/r1_rover/ \
-		-v $(ROOT_DIR)/PX4-sim-patches/x500_depth_model.sdf:/root/PX4-Autopilot/Tools/simulation/gz/models/x500_depth/model.sdf \
+		-v $(ROOT_DIR)/PX4-sim-patches/ours/matte.sdf:/root/PX4-Autopilot/Tools/simulation/gz/models/x500_depth/model.sdf \
 		-v $(ROOT_DIR)/PX4-sim-patches/default_world_arena.sdf:/root/PX4-Autopilot/Tools/simulation/gz/worlds/default.sdf \
 		-v $(ROOT_DIR)/fastDDS_config:/root/fastDDS_config \
 		-v /dev:/dev \
@@ -27,18 +32,17 @@ run:
 		-e XAUTHORITY=/root/.Xauthority \
 		-e DISPLAY=$(DISPLAY) \
 		-w $(WORK_DIR)/scripts \
-		--name $(CONTAINER_NAME) \
-		$(CONTAINER_IMAGE) \
-		bash -ci "make all"
+		--name $(CONTAINER_NAME_BRIDGE) \
+		$(CONTAINER_IMAGE_BRIDGE) \
+		bash
 
-run-dev:
+run-dev-sitl:
 	@echo "Launching PX4 SITL simulation in Docker container..."
 	@xhost +
 	@docker run --rm -it --privileged --ipc host \
 		--net host \
 		--runtime nvidia --gpus all \
 		-v $(ROOT_DIR)/scripts:/root/scripts \
-		-v $(ROOT_DIR)/bridge_ws:/root/bridge_ws \
 		-v $(ROOT_DIR)/ros2_offboard_ws:/root/ros2_offboard \
 		-v $(ROOT_DIR)/PX4-sim-patches/r1_rover:/root/PX4-Autopilot/Tools/simulation/gz/models/r1_rover/ \
 		-v $(ROOT_DIR)/PX4-sim-patches/ours/matte.sdf:/root/PX4-Autopilot/Tools/simulation/gz/models/x500_depth/model.sdf \
@@ -50,18 +54,19 @@ run-dev:
 		-e XAUTHORITY=/root/.Xauthority \
 		-e DISPLAY=$(DISPLAY) \
 		-w $(WORK_DIR)/scripts \
-		--name $(CONTAINER_NAME) \
-		$(CONTAINER_IMAGE) \
+		--name $(CONTAINER_NAME_SITL) \
+		$(CONTAINER_IMAGE_SITL) \
 		bash
 
-run-experimental-nunzio:
-	@echo "Launching PX4 SITL simulation in Docker container with experimental model patch..."
+
+
+run-dev-xrce:
+	@echo "Launching PX4 SITL XRCE simulation in Docker container..."
 	@xhost +
 	@docker run --rm -it --privileged --ipc host \
 		--net host \
 		--runtime nvidia --gpus all \
 		-v $(ROOT_DIR)/scripts:/root/scripts \
-		-v $(ROOT_DIR)/bridge_ws:/root/bridge_ws \
 		-v $(ROOT_DIR)/ros2_offboard_ws:/root/ros2_offboard \
 		-v $(ROOT_DIR)/PX4-sim-patches/r1_rover:/root/PX4-Autopilot/Tools/simulation/gz/models/r1_rover/ \
 		-v $(ROOT_DIR)/PX4-sim-patches/ours/matte.sdf:/root/PX4-Autopilot/Tools/simulation/gz/models/x500_depth/model.sdf \
@@ -73,6 +78,22 @@ run-experimental-nunzio:
 		-e XAUTHORITY=/root/.Xauthority \
 		-e DISPLAY=$(DISPLAY) \
 		-w $(WORK_DIR)/scripts \
-		--name $(CONTAINER_NAME) \
-		$(CONTAINER_IMAGE) \
+		--name $(CONTAINER_NAME_XRCE) \
+		$(CONTAINER_IMAGE_XRCE) \
 		bash
+
+
+build-sitl:
+	@echo "Building PX4 SITL Docker container..."
+	@docker build -t $(CONTAINER_IMAGE_SITL) -f $(ROOT_DIR)/docker_ws/Dockerfile.SITL $(ROOT_DIR)
+
+build-xrce:
+	@echo "Building PX4 SITL XRCE Docker container..."
+	@docker build -t $(CONTAINER_IMAGE_XRCE) -f $(ROOT_DIR)/docker_ws/Dockerfile.SITL_xrce $(ROOT_DIR)
+
+build-bridge:
+	@echo "Building PX4 SITL Bridge Docker container..."
+	@docker build -t $(CONTAINER_IMAGE_BRIDGE) -f $(ROOT_DIR)/docker_ws/Dockerfile.SITL_bridge $(ROOT_DIR)
+
+build: build-bridge build-sitl build-xrce
+	@echo "All build targets executed successfully."
