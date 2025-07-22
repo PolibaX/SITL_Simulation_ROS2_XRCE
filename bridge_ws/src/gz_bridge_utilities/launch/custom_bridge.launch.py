@@ -2,6 +2,9 @@ from launch import LaunchDescription
 from launch_ros.actions import Node
 
 def generate_launch_description():
+    
+    namespace = '/matte'
+    
     return LaunchDescription([
  
         Node(
@@ -9,8 +12,8 @@ def generate_launch_description():
             namespace='',
             executable='image_bridge',
             name='bridge_images',
-            arguments=["/camera",
-                       "/depth_camera",]
+            arguments=[namespace + "/camera",
+                       namespace + "/depth_camera",]
 
         ),
 
@@ -28,7 +31,7 @@ def generate_launch_description():
             namespace='',
             executable='parameter_bridge',
             name='bridge_camera_info',
-            arguments=["/camera_info@sensor_msgs/msg/CameraInfo[gz.msgs.CameraInfo","--ros-args"]
+            arguments=[namespace+"/camera_info@sensor_msgs/msg/CameraInfo[gz.msgs.CameraInfo","--ros-args"]
         ),
 
 
@@ -39,9 +42,9 @@ def generate_launch_description():
             namespace='',
             executable='parameter_bridge',
             name='bridge_points',
-            arguments=["/depth_camera/points@sensor_msgs/msg/PointCloud2[gz.msgs.PointCloudPacked",
+            arguments=[namespace+"/depth_camera/points@sensor_msgs/msg/PointCloud2[gz.msgs.PointCloudPacked",
                        "--ros-args",
-                          "-r", "/depth_camera/points:=/gazebo/points",]
+                          "-r", namespace+"/depth_camera/points:=" + namespace+"/depth_camera/points",]
         ),
 
         Node(
@@ -51,6 +54,13 @@ def generate_launch_description():
             name='bridge_tfs',
             arguments=["/model/x500_depth_0/pose@tf2_msgs/msg/TFMessage[gz.msgs.Pose_V","--ros-args",
                           "-r", "/model/x500_depth_0/pose:=/tf",]
+        ),
+
+        Node(
+            package='tf2_ros',
+            namespace = '',
+            executable='static_transform_publisher',
+            arguments= ["0.01233", "-0.03", "0.01878", "0", "0", "0", "x500_depth_0/camera_link", "x500_depth_0/camera_link/StereoOV7251"]
         ),
 
         # Node(

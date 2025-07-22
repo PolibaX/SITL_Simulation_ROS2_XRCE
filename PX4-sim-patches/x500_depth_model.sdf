@@ -12,7 +12,7 @@
     <joint name="CameraJoint" type="fixed">
       <parent>base_link</parent>
       <child>OakD-Lite/base_link</child>
-      <pose relative_to="base_link">.12 .03 .242 0.35 0 0</pose>
+      <pose relative_to="base_link">.12 .03 .242 0 0.35 0</pose>
     </joint>
 
 
