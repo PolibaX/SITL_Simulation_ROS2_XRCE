@@ -14,6 +14,24 @@ WORK_DIR := /root/
 default: run
 
 
+run-xrce:
+	@echo "Launching PX4 SITL XRCE simulation in Docker container..."
+	@xhost +
+	@docker run --rm -it --privileged --ipc host \
+		--net host \
+		--runtime nvidia --gpus all \
+		-v /dev:/dev \
+		-v /tmp/.X11-unix/:/tmp/.X11-unix \
+		-v ~/.Xauthority:/root/.Xauthority \
+		-e XAUTHORITY=/root/.Xauthority \
+		-e DISPLAY=$(DISPLAY) \
+		-w $(WORK_DIR)/scripts \
+		--name $(CONTAINER_NAME_XRCE) \
+		$(CONTAINER_IMAGE_XRCE) \
+		bash -ci "MicroXRCEAgent udp4 -p 8888"
+
+
+
 run-dev-bridge:
 	@echo "Launching PX4 SITL Bridge simulation in Docker container..."
 	@xhost +
@@ -22,10 +40,6 @@ run-dev-bridge:
 		--runtime nvidia --gpus all \
 		-v $(ROOT_DIR)/scripts:/root/scripts \
 		-v $(ROOT_DIR)/bridge_ws:/root/bridge_ws \
-		-v $(ROOT_DIR)/PX4-sim-patches/r1_rover:/root/PX4-Autopilot/Tools/simulation/gz/models/r1_rover/ \
-		-v $(ROOT_DIR)/PX4-sim-patches/ours/matte.sdf:/root/PX4-Autopilot/Tools/simulation/gz/models/x500_depth/model.sdf \
-		-v $(ROOT_DIR)/PX4-sim-patches/default_world_arena.sdf:/root/PX4-Autopilot/Tools/simulation/gz/worlds/default.sdf \
-		-v $(ROOT_DIR)/fastDDS_config:/root/fastDDS_config \
 		-v /dev:/dev \
 		-v /tmp/.X11-unix/:/tmp/.X11-unix \
 		-v ~/.Xauthority:/root/.Xauthority \
@@ -43,11 +57,9 @@ run-dev-sitl:
 		--net host \
 		--runtime nvidia --gpus all \
 		-v $(ROOT_DIR)/scripts:/root/scripts \
-		-v $(ROOT_DIR)/ros2_offboard_ws:/root/ros2_offboard \
-		-v $(ROOT_DIR)/PX4-sim-patches/r1_rover:/root/PX4-Autopilot/Tools/simulation/gz/models/r1_rover/ \
-		-v $(ROOT_DIR)/PX4-sim-patches/ours/matte.sdf:/root/PX4-Autopilot/Tools/simulation/gz/models/x500_depth/model.sdf \
-		-v $(ROOT_DIR)/PX4-sim-patches/default_world_arena.sdf:/root/PX4-Autopilot/Tools/simulation/gz/worlds/default.sdf \
-		-v $(ROOT_DIR)/fastDDS_config:/root/fastDDS_config \
+		-v $(ROOT_DIR)/SITL_ws/PX4-sim-patches/r1_rover:/root/PX4-Autopilot/Tools/simulation/gz/models/r1_rover/ \
+		-v $(ROOT_DIR)/SITL_ws/PX4-sim-patches/ours/matte.sdf:/root/PX4-Autopilot/Tools/simulation/gz/models/x500_depth/model.sdf \
+		-v $(ROOT_DIR)/SITL_ws/PX4-sim-patches/default_world_arena.sdf:/root/PX4-Autopilot/Tools/simulation/gz/worlds/default.sdf \
 		-v /dev:/dev \
 		-v /tmp/.X11-unix/:/tmp/.X11-unix \
 		-v ~/.Xauthority:/root/.Xauthority \
@@ -56,7 +68,7 @@ run-dev-sitl:
 		-w $(WORK_DIR)/scripts \
 		--name $(CONTAINER_NAME_SITL) \
 		$(CONTAINER_IMAGE_SITL) \
-		bash
+		bash 
 
 
 
@@ -67,11 +79,6 @@ run-dev-xrce:
 		--net host \
 		--runtime nvidia --gpus all \
 		-v $(ROOT_DIR)/scripts:/root/scripts \
-		-v $(ROOT_DIR)/ros2_offboard_ws:/root/ros2_offboard \
-		-v $(ROOT_DIR)/PX4-sim-patches/r1_rover:/root/PX4-Autopilot/Tools/simulation/gz/models/r1_rover/ \
-		-v $(ROOT_DIR)/PX4-sim-patches/ours/matte.sdf:/root/PX4-Autopilot/Tools/simulation/gz/models/x500_depth/model.sdf \
-		-v $(ROOT_DIR)/PX4-sim-patches/default_world_arena.sdf:/root/PX4-Autopilot/Tools/simulation/gz/worlds/default.sdf \
-		-v $(ROOT_DIR)/fastDDS_config:/root/fastDDS_config \
 		-v /dev:/dev \
 		-v /tmp/.X11-unix/:/tmp/.X11-unix \
 		-v ~/.Xauthority:/root/.Xauthority \
@@ -80,20 +87,25 @@ run-dev-xrce:
 		-w $(WORK_DIR)/scripts \
 		--name $(CONTAINER_NAME_XRCE) \
 		$(CONTAINER_IMAGE_XRCE) \
-		bash
+		bash 
+
+
 
 
 build-sitl:
 	@echo "Building PX4 SITL Docker container..."
 	@docker build -t $(CONTAINER_IMAGE_SITL) -f $(ROOT_DIR)/docker_ws/Dockerfile.SITL $(ROOT_DIR)
 
+
 build-xrce:
 	@echo "Building PX4 SITL XRCE Docker container..."
 	@docker build -t $(CONTAINER_IMAGE_XRCE) -f $(ROOT_DIR)/docker_ws/Dockerfile.SITL_xrce $(ROOT_DIR)
 
+
 build-bridge:
 	@echo "Building PX4 SITL Bridge Docker container..."
 	@docker build -t $(CONTAINER_IMAGE_BRIDGE) -f $(ROOT_DIR)/docker_ws/Dockerfile.SITL_bridge $(ROOT_DIR)
+
 
 build: build-bridge build-sitl build-xrce
 	@echo "All build targets executed successfully."
