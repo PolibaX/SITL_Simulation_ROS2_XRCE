@@ -97,12 +97,15 @@ class TFBridgeNode(Node):
             Publish the latest baselink pose as a dynamic transform.
         """
         # lookup transform from default to baselink
-        transform = self.tf_buffer.lookup_transform(
-            self.world_frame, 
-            self.baselink_frame, 
-            rclpy.time.Time()
-        )
-        
+        try:
+            transform = self.tf_buffer.lookup_transform(
+                self.world_frame, 
+                self.baselink_frame, 
+                rclpy.time.Time()
+            )
+        except Exception as e:
+            self.get_logger().error(f"Failed to lookup transform: {e}")
+            return
         self.odom_to_baselink_tf_msg.header.stamp = self.get_clock().now().to_msg()
         self.odom_to_baselink_tf_msg.transform.translation.x = transform.transform.translation.x
         self.odom_to_baselink_tf_msg.transform.translation.y = transform.transform.translation.y
