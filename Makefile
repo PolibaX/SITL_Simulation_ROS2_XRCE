@@ -19,7 +19,7 @@ run:
 		-v $(ROOT_DIR)/ros2_offboard_ws:/root/ros2_offboard \
 		-v $(ROOT_DIR)/PX4-sim-patches/r1_rover:/root/PX4-Autopilot/Tools/simulation/gz/models/r1_rover/ \
 		-v $(ROOT_DIR)/PX4-sim-patches/x500_depth_model.sdf:/root/PX4-Autopilot/Tools/simulation/gz/models/x500_depth/model.sdf \
-		-v $(ROOT_DIR)/PX4-sim-patches/default_world_arena.sdf:/root/PX4-Autopilot/Tools/simulation/gz/worlds/default.sdf \
+		-v $(ROOT_DIR)/PX4-sim-patches/default_world_arena.sdf:/root/PX4-Autopilot/Tools/simulation/gz/worlds/map.sdf \
 		-v $(ROOT_DIR)/fastDDS_config:/root/fastDDS_config \
 		-v /dev:/dev \
 		-v /tmp/.X11-unix/:/tmp/.X11-unix \
@@ -42,7 +42,7 @@ run-dev:
 		-v $(ROOT_DIR)/ros2_offboard_ws:/root/ros2_offboard \
 		-v $(ROOT_DIR)/PX4-sim-patches/r1_rover:/root/PX4-Autopilot/Tools/simulation/gz/models/r1_rover/ \
 		-v $(ROOT_DIR)/PX4-sim-patches/ours/matte.sdf:/root/PX4-Autopilot/Tools/simulation/gz/models/x500_depth/model.sdf \
-		-v $(ROOT_DIR)/PX4-sim-patches/default_world_arena.sdf:/root/PX4-Autopilot/Tools/simulation/gz/worlds/default.sdf \
+		-v $(ROOT_DIR)/PX4-sim-patches/default_world_arena.sdf:/root/PX4-Autopilot/Tools/simulation/gz/worlds/map.sdf \
 		-v $(ROOT_DIR)/fastDDS_config:/root/fastDDS_config \
 		-v /dev:/dev \
 		-v /tmp/.X11-unix/:/tmp/.X11-unix \
@@ -65,7 +65,7 @@ run-experimental-nunzio:
 		-v $(ROOT_DIR)/ros2_offboard_ws:/root/ros2_offboard \
 		-v $(ROOT_DIR)/PX4-sim-patches/r1_rover:/root/PX4-Autopilot/Tools/simulation/gz/models/r1_rover/ \
 		-v $(ROOT_DIR)/PX4-sim-patches/ours/matte.sdf:/root/PX4-Autopilot/Tools/simulation/gz/models/x500_depth/model.sdf \
-		-v $(ROOT_DIR)/PX4-sim-patches/default_world_arena.sdf:/root/PX4-Autopilot/Tools/simulation/gz/worlds/default.sdf \
+		-v $(ROOT_DIR)/PX4-sim-patches/default_world_arena.sdf:/root/PX4-Autopilot/Tools/simulation/gz/worlds/map.sdf \
 		-v $(ROOT_DIR)/fastDDS_config:/root/fastDDS_config \
 		-v /dev:/dev \
 		-v /tmp/.X11-unix/:/tmp/.X11-unix \
