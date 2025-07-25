@@ -4,14 +4,19 @@ docker run --rm -it --privileged --ipc host \
     --net host\
 	--runtime nvidia --gpus all \
     -v ./scripts:/root/scripts \
+    -v ./bridge_ws:/root/bridge_ws \
     -v ./ros2_offboard_ws:/root/ros2_offboard \
-    -v ./PX4_experimental:/root/experimental_PX4 \
+    -v ./PX4-sim-patches/r1_rover:/root/PX4-Autopilot/Tools/simulation/gz/models/r1_rover/ \
+    -v ./PX4-sim-patches/x500_model.sdf:/root/PX4-Autopilot/Tools/simulation/gz/models/x500/model.sdf \
+    -v ./PX4-sim-patches/x500_depth_model.sdf:/root/PX4-Autopilot/Tools/simulation/gz/models/x500_depth/model.sdf \
+    -v ./PX4-sim-patches/default_world_arena.sdf:/root/PX4-Autopilot/Tools/simulation/gz/worlds/default.sdf \
+    -v ./fastDDS_config:/root/fastDDS_config \
 	-v /dev:/dev \
 	-v /tmp/.X11-unix/:/tmp/.X11-unix \
 	-v ~/.Xauthority:/root/.Xauthority \
     -e XAUTHORITY=/root/.Xauthority \
     -e DISPLAY=$DISPLAY \
     -w /root \
-    --name ros2_sitl \
-    sitl_ros2:outer_volumes bash 
+    --name ros2_sitlv1.15 \
+    sitl_ros2:v1.15 bash 
 

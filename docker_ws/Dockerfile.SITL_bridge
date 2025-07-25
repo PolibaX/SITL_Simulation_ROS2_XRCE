@@ -1,0 +1,31 @@
+FROM ros:jazzy
+
+# build ROS2 workspace
+ARG PX4_MSG_VERSION=1.15
+
+WORKDIR /root
+RUN mkdir -p ~/ws_sensor_combined/src/
+WORKDIR /root/ws_sensor_combined/src/
+RUN git clone --branch release/${PX4_MSG_VERSION} https://github.com/PX4/px4_msgs.git
+RUN git clone --branch release/${PX4_MSG_VERSION} https://github.com/PX4/px4_ros_com.git
+WORKDIR /root/ws_sensor_combined/
+
+# use bash
+SHELL ["/bin/bash", "-c"]
+
+RUN source /opt/ros/jazzy/setup.bash && colcon build --symlink-install
+
+# install ros-humble-ros-gz
+
+# RUN wget https://packages.osrfoundation.org/gazebo.gpg -O /usr/share/keyrings/pkgs-osrf-archive-keyring.gpg
+# RUN echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/pkgs-osrf-archive-keyring.gpg] http://packages.osrfoundation.org/gazebo/ubuntu-stable $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/gazebo-stable.list > /dev/null
+# RUN apt-get update && apt install gz-garden
+
+RUN apt-get update && apt-get install -y python3-pip
+
+RUN apt update && apt install python3-scipy -y
+
+RUN apt update && apt install -y ros-jazzy-depth-image-proc ros-jazzy-ros-gz-image
+RUN apt install libnvidia-gl-550 -y
+# set ros_domain_id to 33 to avoid conflicts with other ros2 networks
+ENV ROS_DOMAIN_ID=33

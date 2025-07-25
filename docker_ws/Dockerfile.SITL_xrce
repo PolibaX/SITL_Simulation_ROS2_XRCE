@@ -1,0 +1,15 @@
+FROM ros:jazzy
+
+# python dependencies
+# RUN pip install --user -U empy==3.3.4 pyros-genmsg setuptools==70.0.0
+
+# setup micro XRCE-DDS Agent & Client
+WORKDIR /root
+RUN git clone https://github.com/eProsima/Micro-XRCE-DDS-Agent.git
+WORKDIR /root/Micro-XRCE-DDS-Agent
+RUN mkdir build
+WORKDIR /root/Micro-XRCE-DDS-Agent/build
+RUN cmake ..
+RUN make
+RUN make install
+RUN ldconfig /usr/local/lib

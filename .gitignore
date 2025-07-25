@@ -3,3 +3,10 @@ ros2_offboard_ws/build
 ros2_offboard_ws/install
 ros2_offboard_ws/log
 
+bridge_ws/build
+bridge_ws/install
+bridge_ws/log
+
+PX4_experimental
+
+
