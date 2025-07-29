@@ -4,6 +4,7 @@ CONTAINER_IMAGE_BRIDGE := polibax/sitl_bridge:jazzy
 CONTAINER_NAME_BRIDGE := sitl_bridge
 CONTAINER_IMAGE_XRCE := polibax/sitl_xrce:jazzy
 CONTAINER_NAME_XRCE := sitl_xrce
+ROS_DOMAIN_ID := 33
 
 PERCENT := %
 ROOT_DIR := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
@@ -13,6 +14,28 @@ WORK_DIR := /root/
 
 default: run
 
+run: run-sitl run-xrce run-bridge
+
+run-sitl:
+	@echo "Launching PX4 SITL simulation in Docker container..."
+	@xhost +
+	@docker run --rm --privileged --ipc host \
+		--net host \
+		--runtime nvidia --gpus all \
+		-v $(ROOT_DIR)/scripts:/root/scripts \
+		-v $(ROOT_DIR)/SITL_ws/PX4-sim-patches/r1_rover:/root/PX4-Autopilot/Tools/simulation/gz/models/r1_rover/ \
+		-v $(ROOT_DIR)/SITL_ws/PX4-sim-patches/ours/matte.sdf:/root/PX4-Autopilot/Tools/simulation/gz/models/x500_depth/model.sdf \
+		-v $(ROOT_DIR)/SITL_ws/PX4-sim-patches/default_world_arena.sdf:/root/PX4-Autopilot/Tools/simulation/gz/worlds/map.sdf \
+		-v /dev:/dev \
+		-v /tmp/.X11-unix/:/tmp/.X11-unix \
+		-v ~/.Xauthority:/root/.Xauthority \
+		-e XAUTHORITY=/root/.Xauthority \
+		-e DISPLAY=$(DISPLAY) \
+		-e ROS_DOMAIN_ID=$(ROS_DOMAIN_ID) \
+		-w $(WORK_DIR)/scripts \
+		--name $(CONTAINER_NAME_SITL) \
+		$(CONTAINER_IMAGE_SITL) \
+		bash -ci "./start_sim_depth.sh"
 
 run-xrce:
 	@echo "Launching PX4 SITL XRCE simulation in Docker container..."
@@ -25,12 +48,31 @@ run-xrce:
 		-v ~/.Xauthority:/root/.Xauthority \
 		-e XAUTHORITY=/root/.Xauthority \
 		-e DISPLAY=$(DISPLAY) \
+		-e ROS_DOMAIN_ID=$(ROS_DOMAIN_ID) \
 		-w $(WORK_DIR)/scripts \
 		--name $(CONTAINER_NAME_XRCE) \
 		$(CONTAINER_IMAGE_XRCE) \
 		bash -ci "MicroXRCEAgent udp4 -p 8888"
 
 
+run-bridge:
+	@echo "Launching PX4 SITL Bridge simulation in Docker container..."
+	@xhost +
+	@docker run --rm -it --privileged --ipc host \
+		--net host \
+		--runtime nvidia --gpus all \
+		-v $(ROOT_DIR)/scripts:/root/scripts \
+		-v $(ROOT_DIR)/bridge_ws:/root/bridge_ws \
+		-v /dev:/dev \
+		-v /tmp/.X11-unix/:/tmp/.X11-unix \
+		-v ~/.Xauthority:/root/.Xauthority \
+		-e XAUTHORITY=/root/.Xauthority \
+		-e DISPLAY=$(DISPLAY) \
+		-e ROS_DOMAIN_ID=$(ROS_DOMAIN_ID) \
+		-w $(WORK_DIR)/scripts \
+		--name $(CONTAINER_NAME_BRIDGE) \
+		$(CONTAINER_IMAGE_BRIDGE) \
+		bash -ci "./start_ros2gz_bridge.sh"
 
 run-dev-bridge:
 	@echo "Launching PX4 SITL Bridge simulation in Docker container..."

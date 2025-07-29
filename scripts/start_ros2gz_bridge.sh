@@ -1,6 +1,7 @@
 #!/bin/bash
 
 source /opt/ros/humble/setup.bash
+cd /root/bridge_ws && colcon build
 source /root/bridge_ws/install/local_setup.bash
 # ros2 run ros_gz_image image_bridge /topic1 /topic2 / topic3 ....
 
