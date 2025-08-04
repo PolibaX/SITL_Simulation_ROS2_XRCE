@@ -23,3 +23,5 @@ WORKDIR /root/PX4-Autopilot
 RUN bash ./Tools/setup/ubuntu.sh
 RUN make px4_sitl
 
+RUN apt update && apt install libnvidia-gl-575 -y
+
