@@ -1,0 +1,74 @@
+services:
+  simulation:
+    environment:
+      - DISPLAY=${DISPLAY}
+      - XAUTHORITY=/root/.Xauthority
+      - ROS_DOMAIN_ID=33
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - ~/.Xauthority:/root/.Xauthority
+      - ./scripts:/root/scripts
+      - ./SITL_ws/PX4-sim-patches/r1_rover:/root/PX4-Autopilot/Tools/simulation/gz/models/r1_rover/
+      - ./SITL_ws/PX4-sim-patches/ours/matte.sdf:/root/PX4-Autopilot/Tools/simulation/gz/models/x500_depth/model.sdf
+      - ./SITL_ws/PX4-sim-patches/default_world_arena.sdf:/root/PX4-Autopilot/Tools/simulation/gz/worlds/map.sdf
+      - ./SITL_ws/PX4-sim-patches/px4-rc.params:/root/PX4-Autopilot/ROMFS/px4fmu_common/init.d-posix/px4-rc.params
+      - /dev:/dev
+    working_dir: /root/scripts
+    network_mode: host
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    image: polibax/sitl_px4:jazzy
+    container_name: sitl_px4
+    command: ./start_sim_depth.sh
+
+  dds:
+    network_mode: host
+    environment:
+      - DISPLAY=${DISPLAY}
+      - XAUTHORITY=/root/.Xauthority
+      - ROS_DOMAIN_ID=33
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - ~/.Xauthority:/root/.Xauthority
+      - ./scripts:/root/scripts
+      - /dev:/dev
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    working_dir: /root/scripts
+    image: polibax/sitl_xrce:jazzy
+    container_name: sitl_xrce
+    command: bash -ci "./start_dds.sh"
+
+  ros2gz_bridge:
+    network_mode: host
+    environment:
+      - DISPLAY=${DISPLAY}
+      - XAUTHORITY=/root/.Xauthority
+      - ROS_DOMAIN_ID=33
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - ~/.Xauthority:/root/.Xauthority
+      - ./scripts:/root/scripts
+      - ./bridge_ws:/root/bridge_ws
+      - /dev:/dev
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    working_dir: /root/scripts
+    image: polibax/sitl_bridge:jazzy
+    container_name: sitl_bridge
+    command: ./start_ros2gz_bridge.sh
