@@ -1,4 +1,4 @@
-CONTAINER_IMAGE_SITL := polibax/sitl_px4:v1.15
+CONTAINER_IMAGE_SITL := polibax/sitl_px4:jazzy
 CONTAINER_NAME_SITL := sitl_px4
 CONTAINER_IMAGE_BRIDGE := polibax/sitl_bridge:jazzy
 CONTAINER_NAME_BRIDGE := sitl_bridge
