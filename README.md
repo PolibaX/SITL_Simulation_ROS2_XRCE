@@ -17,6 +17,12 @@ on the root of the repository folder run:<br>
 
 
 ## Run simulation
+
+`docker compose up`
+
+---
+[DEPRECATED]
+
 Inside the container run:<br>
 `./scripts/start_sim_depth.sh` <br>
 In another terminal inside the container opened using **exec_SITL_ros2.sh** run XRCE:<br>
