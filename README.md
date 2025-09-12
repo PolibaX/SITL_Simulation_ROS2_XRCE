@@ -1,38 +1,55 @@
-# WARNING DOCS UNDER DEVELOPMENT AND INCONSISTENT 
-
-PLEASE CONTACT ME IF YOU EXPERIENCE ANY ISSUES
-
 # PX4 SITL ROS 2
 This repository contains all the necessary parts to build and run a docker image with SITL simulation on ROS2 leveraging XRCE to communicate with PX4.
 
-## build image
+## Overview
+This repository contains the 3 main components of the simulation:
+- PX4 Firmware (with Gazebo SITL)
+- XRCE-DDS-Agent to communicate with the simulated PX4
+- BRIDGE to communicate the Gazebo simulation topics to ROS2 topics
 
-`cd docker_ws` <br>
-`./build_SITL_ros2.sh`
+## Simple workflow
 
+### build images
+Build the tree docker images with:
+`make build` 
 
-## Run container
-on the root of the repository folder run:<br>
-`./run_SITL_ros2.sh` this run scripts may need additional volumes to be mapped in the long run.
-
-
-## Run simulation
-
+### Run simulation
+Run the full simulation with:
 `docker compose up`
 
----
-[DEPRECATED]
+## Makefile commands (debug and development purposes)
+### Build commands
+- `make build` : Build all the docker images
+- `make build-sitl` : Build the PX4 SITL docker image
+- `make build-xrce` : Build the XRCE-DDS-Agent docker image
+- `make build-bridge` : Build the ROS2 bridge docker image
 
-Inside the container run:<br>
-`./scripts/start_sim_depth.sh` <br>
-In another terminal inside the container opened using **exec_SITL_ros2.sh** run XRCE:<br>
-`./scripts/start_dds.sh` <br>
+### Run commands:
+- `make run-sitl` : Run only the PX4 SITL docker container
+- `make run-xrce` : Run only the XRCE-DDS-Agent docker container
+- `make run-bridge` : Run only the ROS2 bridge docker container
+- `make run-dev-sitl` : Run only the PX4 SITL docker container in dev (interactive bash) mode
+- `make run-dev-xrce` : Run only the XRCE-DDS-Agent docker container in dev (interactive bash) mode
+- `make run-dev-bridge` : Run only the ROS2 bridge docker container in dev (interactive bash) mode
 
-## Run bridges (camera, depth camera, point cloud, tfs)
+### Stop commands:
+- `make stop` : Stop all running containers
+- `make stop-sitl` : Stop only the PX4 SITL docker container
+- `make stop-xrce` : Stop only the XRCE-DDS-Agent docker container
+- `make stop-bridge` : Stop only the ROS2 bridge docker container
 
-Inside the container go to ws_bridge folder, build with colcon build, source install/setup.bash and then run: <br>
-`ros2 launch gz_bridge_utilities custom_bridge.launch.py` <br>
+### Help command:
+- `make help` : Show the help message with all the available commands
 
-## result
+## Configurations
 
-These steps will give you a running simulation with px4 and X500v2 + depth camera + point clouds bridged on ros2
+### Simulation assets and configuration
+TO BE UPDATED
+
+### ROS2 bridge configuration
+TO BE UPDATED
+
+### PX4 parameters configuration
+
+## for the developers
+Remember to update the makefile help section when adding new commands and keep the readme consistent !!! 

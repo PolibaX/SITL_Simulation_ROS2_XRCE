@@ -12,9 +12,11 @@ WORK_DIR := /root/
 
 .PHONY: run
 
-default: run
+default: help
 
-run: run-sitl run-xrce run-bridge
+#run: run-sitl run-xrce run-bridge # DEPRECATED
+
+######################## RUN TARGETS #########################
 
 run-sitl:
 	@echo "Launching PX4 SITL simulation in Docker container..."
@@ -132,7 +134,7 @@ run-dev-xrce:
 		bash 
 
 
-
+####################### BUILD TARGETS #########################
 
 build-sitl:
 	@echo "Building PX4 SITL Docker container..."
@@ -151,3 +153,54 @@ build-bridge:
 
 build: build-bridge build-sitl build-xrce
 	@echo "All build targets executed successfully."
+
+######################## STOP TARGETS #########################
+
+stop:
+	@echo "Stopping all running containers..."
+	-docker stop $(CONTAINER_NAME_SITL) || true
+	-docker stop $(CONTAINER_NAME_XRCE) || true
+	-docker stop $(CONTAINER_NAME_BRIDGE) || true
+	@echo "All specified containers have been stopped."
+
+
+stop-sitl:
+	@echo "Stopping SITL container..."
+	-docker stop $(CONTAINER_NAME_SITL) || true
+	@echo "SITL container stopped."
+
+stop-xrce:
+	@echo "Stopping XRCE container..."
+	-docker stop $(CONTAINER_NAME_XRCE) || true
+	@echo "XRCE container stopped."
+
+stop-bridge:
+	@echo "Stopping Bridge container..."
+	-docker stop $(CONTAINER_NAME_BRIDGE) || true
+	@echo "Bridge container stopped."
+
+
+
+######################## HELP TARGET #########################
+
+help:
+	@echo "Makefile commands:"
+	@echo "--------------------------BUILD TARGETS--------------------------"
+	@echo "  make build            Build all docker images (sitl, xrce, bridge)"
+	@echo "  make build-sitl       Build only the sitl docker image"
+	@echo "  make build-xrce       Build only the xrce docker image"
+	@echo "  make build-bridge     Build only the bridge docker image"
+	@echo "--------------------------RUN TARGETS--------------------------"
+	@echo "  make run-sitl         Run only the sitl container"
+	@echo "  make run-xrce         Run only the xrce container"
+	@echo "  make run-bridge       Run only the bridge container"
+	@echo "  make run-dev-sitl     Run only the sitl container in dev (interactive bash) mode"
+	@echo "  make run-dev-xrce     Run only the xrce container in dev (interactive bash) mode"
+	@echo "  make run-dev-bridge   Run only the bridge container in dev (interactive bash) mode"
+	@echo "--------------------------STOP TARGETS--------------------------"
+	@echo "  make stop             Stop all running containers"
+	@echo "  make stop-sitl        Stop only the sitl container"
+	@echo "  make stop-xrce        Stop only the xrce container"
+	@echo "  make stop-bridge      Stop only the bridge container"
+	@echo "--------------------------HELP TARGET--------------------------"
+	@echo "  make help             Show this help message"
