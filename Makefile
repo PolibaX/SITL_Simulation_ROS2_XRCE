@@ -28,6 +28,7 @@ run-sitl:
 		-v $(ROOT_DIR)/SITL_ws/PX4-sim-patches/r1_rover:/root/PX4-Autopilot/Tools/simulation/gz/models/r1_rover/ \
 		-v $(ROOT_DIR)/SITL_ws/PX4-sim-patches/ours/matte.sdf:/root/PX4-Autopilot/Tools/simulation/gz/models/x500_depth/model.sdf \
 		-v $(ROOT_DIR)/SITL_ws/PX4-sim-patches/default_world_arena.sdf:/root/PX4-Autopilot/Tools/simulation/gz/worlds/map.sdf \
+      	-v $(ROOT_DIR)/SITL_ws/PX4-sim-patches/px4-rc.params:/root/PX4-Autopilot/ROMFS/px4fmu_common/init.d-posix/px4-rc.params \
 		-v /dev:/dev \
 		-v /tmp/.X11-unix/:/tmp/.X11-unix \
 		-v ~/.Xauthority:/root/.Xauthority \
