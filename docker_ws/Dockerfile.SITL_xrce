@@ -1,4 +1,6 @@
-FROM ros:jazzy
+ARG ROS_DISTRO=humble
+
+FROM ros:${ROS_DISTRO}
 
 # python dependencies
 # RUN pip install --user -U empy==3.3.4 pyros-genmsg setuptools==70.0.0

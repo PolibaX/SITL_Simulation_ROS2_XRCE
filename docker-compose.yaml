@@ -24,7 +24,7 @@ services:
             - driver: nvidia
               count: 1
               capabilities: [gpu]
-    image: polibax/sitl_px4:jazzy
+    image: polibax/sitl_px4:humble
     container_name: sitl_px4
     command: ./start_sim_depth.sh
 
@@ -49,7 +49,7 @@ services:
               count: 1
               capabilities: [gpu]
     working_dir: /root/scripts
-    image: polibax/sitl_xrce:jazzy
+    image: polibax/sitl_xrce:humble
     container_name: sitl_xrce
     command: bash -ci "./start_dds.sh"
 
@@ -75,6 +75,6 @@ services:
               count: 1
               capabilities: [gpu]
     working_dir: /root/scripts
-    image: polibax/sitl_bridge:jazzy
+    image: polibax/sitl_bridge:humble
     container_name: sitl_bridge
     command: ./start_ros2gz_bridge.sh

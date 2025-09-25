@@ -1,8 +1,9 @@
-CONTAINER_IMAGE_SITL := polibax/sitl_px4:jazzy
+ROS_DISTRO := humble
+CONTAINER_IMAGE_SITL := polibax/sitl_px4:$(ROS_DISTRO)
 CONTAINER_NAME_SITL := sitl_px4
-CONTAINER_IMAGE_BRIDGE := polibax/sitl_bridge:jazzy
+CONTAINER_IMAGE_BRIDGE := polibax/sitl_bridge:$(ROS_DISTRO)
 CONTAINER_NAME_BRIDGE := sitl_bridge
-CONTAINER_IMAGE_XRCE := polibax/sitl_xrce:jazzy
+CONTAINER_IMAGE_XRCE := polibax/sitl_xrce:$(ROS_DISTRO)
 CONTAINER_NAME_XRCE := sitl_xrce
 ROS_DOMAIN_ID := 33
 
